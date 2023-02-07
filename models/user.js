@@ -27,6 +27,12 @@ userSchema.methods.validatePassword = async function validatePassword(data) {
     return bcrypt.compare(data, this.password);
 };
 
+userSchema.methods.toJSON = function() {
+    const obj = this.toObject(); //or var obj = this;
+    delete obj.password;
+    return obj;
+}
+
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
