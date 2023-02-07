@@ -4,7 +4,7 @@ const express = require("express");
 const app = express();
 
 const userRouter = require("./routes/user");
-
+const postRouter = require("./routes/post");
 app.use(express.json());
 app.use(
     cors({
@@ -17,5 +17,6 @@ app.get('/', (req, res) => {
 });
 
 app.use('/user', userRouter);
+app.use('/post', postRouter);
 
 module.exports = app;
