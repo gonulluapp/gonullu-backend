@@ -16,7 +16,6 @@ const supplyItemSchema = new mongoose.Schema(
     }
 );
 
-
 const postSchema = new mongoose.Schema(
     {title : { type: String, required: true },
     description : { type: String, required: true },
@@ -35,9 +34,11 @@ const postSchema = new mongoose.Schema(
 
 postSchema.plugin(mongoosePaginate);
 
+postSchema.methods.toJSON = function() {
+    const obj = this.toObject(); //or var obj = this;
+    delete obj.isDeleted;
+    return obj;
+}
 const Post = mongoose.model("Post", postSchema);
-
-Post.paginate().then({});
-
 
 module.exports = Post;

@@ -47,6 +47,7 @@ router.post("/login", async (req, res) => {
             httpOnly: true,
         }).send({
             token,
+            user
         }); // maxAge: 2 hours
     } catch (e) {
         console.log(e);
