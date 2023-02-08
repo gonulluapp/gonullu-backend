@@ -47,6 +47,7 @@ router.get("/", async (req, res) => {
 			page: page || 0,
 			limit: limit || 10,
 			sort: { urgency: -1, date: -1 },
+			populate: 'user',
 		};
 
 		const where = { isDeleted: false };
@@ -54,8 +55,8 @@ router.get("/", async (req, res) => {
 		if (town) where.town = town;
 		if (supplyItemTypes) where["supplyItems.type"] = supplyItemTypes;
 
-		const paginatedPosts = await Post.paginate(where, options);
-
+		const paginatedPosts = await Post.paginate(where, options, );
+		
 		res.status(200).send(paginatedPosts);
 	} catch (error) {
 		console.log(error.message);

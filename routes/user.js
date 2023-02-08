@@ -6,11 +6,12 @@ const jwt = require("jsonwebtoken");
 const auth = require("../middlewares/auth");
 
 router.post("/signup", async (req, res) => {
-    const { email, password } = req.body;
+    const { name, email, password } = req.body;
 
     try {
         // storing our user data into database
         const user = await User.create({
+            name,
             email,
             password,
         });
