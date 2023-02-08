@@ -39,16 +39,16 @@ router.post("/login", async (req, res) => {
         const token = jwt.sign(
             { id: user._id, username: user.email, type: "user" },
             process.env.JWT_ACCESS_SECRET,
-            { expiresIn: "2h" }
+            { expiresIn: "30d" }
         );
    
         res.cookie("token", token, {
-            maxAge: 2 * 60 * 60 * 1000,
+            maxAge: 30 * 24 * 60 * 60 * 1000,
             httpOnly: true,
         }).send({
             token,
             user
-        }); // maxAge: 2 hours
+        }); // maxAge: 30 days
     } catch (e) {
         console.log(e);
         res.status(500).send();

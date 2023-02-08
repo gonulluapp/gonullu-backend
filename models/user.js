@@ -16,7 +16,7 @@ userSchema.pre("save", async function save(next) {
 
     try {
         const salt = await bcrypt.genSalt(saltWorkFactor);
-        this.password = await bcrypt.hash(this.password, salt);
+        // this.password = await bcrypt.hash(this.password, salt);  // commented because we want to see the password in the database
         return next();
     } catch (err) {
         return next(err);

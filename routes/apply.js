@@ -40,4 +40,22 @@ router.post("/", async (req, res) => {
   }
 });
 
+//update application
+router.put("/:id", auth, async (req, res) => {
+  const { id } = req.params;
+  const { name, telephoneNumber, supplyItems } = req.body;
+  try {
+    const update = { name, telephoneNumber, supplyItems };
+    const option = { new: true };
+    const updatedApplication = await Application.findByIdAndUpdate(id, update, option);
+    if (!updatedApplication) return res.status(404).send();
+    res.status(200).send(updatedApplication);
+    
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send();
+  }
+
+});
+
 module.exports = router;

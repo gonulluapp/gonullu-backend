@@ -70,12 +70,15 @@ router.put("/:id", auth, async (req, res) => {
     try {
         const update = { title, description, city, town, address, telephoneNumber, email, whatsappLink, $push:{supplyItems: supplyItems}};
         const option = { new: true };
+        const curPost = await Post.findById(postId);
+        console.log(curPost);
+        console.log("denemeeeeeeeeeeee")
         const updatedPost = await Post.findByIdAndUpdate(
             postId,
             update, 
             option);
         if (!updatedPost) return res.status(404).send();
-        res.status(200).send(updatedPost);s
+        res.status(200).send(updatedPost);
 
     } catch (error) {
         console.log(error.message);
