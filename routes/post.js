@@ -63,6 +63,27 @@ router.get("/", async (req, res) => {
     }
 });
 
+//update post
+router.put("/:id", auth, async (req, res) => {
+    const { title, description, city, town, address, telephoneNumber, email, whatsappLink, supplyItems } = req.body;
+    const postId = req.params.id;
+    try {
+        const update = { title, description, city, town, address, telephoneNumber, email, whatsappLink, $push:{supplyItems: supplyItems}};
+        const option = { new: true };
+        const updatedPost = await Post.findByIdAndUpdate(
+            postId,
+            update, 
+            option);
+        if (!updatedPost) return res.status(404).send();
+        res.status(200).send(updatedPost);s
+
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).send();
+    }
+});
+
+
 router.get("/:id", async (req, res) => {
     const userId = req.params.id;
 
