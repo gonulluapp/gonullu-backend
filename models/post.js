@@ -1,20 +1,7 @@
 const mongoose= require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
+const supplyItemSchema = require('./common_schemas/supplyItemSchema');
 
-const supplyItemSchema = new mongoose.Schema(
-    {type : { 
-        type: String, 
-        enum : ['ERZAK', 'INSAN_GUCU', 'KIYAFET', 'TEMIZLIK_MALZEMESI'],
-        required: true
-    },
-    description : { type: String, required: true },
-    // 3 2 1
-    urgency : { 
-        type: Number,
-        required: true
-    },
-    }
-);
 
 const postSchema = new mongoose.Schema(
     {title : { type: String, required: true },

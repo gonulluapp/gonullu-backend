@@ -5,6 +5,7 @@ const app = express();
 
 const userRouter = require("./routes/user");
 const postRouter = require("./routes/post");
+const applyRouter = require("./routes/apply");
 app.use(express.json());
 app.use(
     cors({
@@ -15,7 +16,7 @@ app.use(
 app.get('/', (req, res) => {
     res.send({ message: "Server is running"});
 });
-
+app.use('/apply', applyRouter);
 app.use('/user', userRouter);
 app.use('/post', postRouter);
 
