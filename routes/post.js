@@ -47,7 +47,7 @@ router.get("/", async (req, res) => {
 			page: page || 0,
 			limit: limit || 10,
 			sort: { urgency: -1, date: -1 },
-			populate: 'user',
+			populate: "user",
 		};
 
 		const where = { isDeleted: false };
@@ -55,9 +55,25 @@ router.get("/", async (req, res) => {
 		if (town) where.town = town;
 		if (supplyItemTypes) where["supplyItems.type"] = supplyItemTypes;
 
-		const paginatedPosts = await Post.paginate(where, options, );
-		
+		const paginatedPosts = await Post.paginate(where, options);
+
 		res.status(200).send(paginatedPosts);
+	} catch (error) {
+		console.log(error.message);
+		res.status(500).send();
+	}
+});
+
+//get specific post by id
+router.get("/:id", async (req, res) => {
+	const postId = req.params.id;
+	try {
+		const post = await Post.findOne({
+			_id: postId,
+			isDeleted: false,
+		}).populate("user");
+		if (!post) return res.status(404).send();
+		return res.status(200).send(post);
 	} catch (error) {
 		console.log(error.message);
 		res.status(500).send();
@@ -91,7 +107,7 @@ router.put("/:id", auth, async (req, res) => {
 			supplyItems: supplyItems,
 		};
 		const option = { new: true };
-		
+
 		const updatedPost = await Post.findByIdAndUpdate(
 			postId,
 			update,
@@ -105,8 +121,8 @@ router.put("/:id", auth, async (req, res) => {
 		res.status(500).send();
 	}
 });
-
-router.get("/:id", async (req, res) => {
+// get specific user's posts
+router.get("/user/:id/posts", async (req, res) => {
 	const userId = req.params.id;
 
 	try {
