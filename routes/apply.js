@@ -5,36 +5,39 @@ const auth = require("../middlewares/auth");
 const Application = require("../models/apply");
 
 router.get("/", auth, async (req, res) => {
-    try {
-        const post = await Post.find({
-            user: req.user._id,
-            isDeleted: false,
-        });
+  try {
+    const posts = await Post.find({
+      user: req.user._id,
+      isDeleted: false,
+    });
 
-        const applications = await Application.find({
-            post: post.map((p) => p._id),
-        });
-
-        res.send(applications);
-    } catch (err) {
-        res.status(500).send(err);
+    let allApplications = [];
+    for (let post of posts) {
+      const applications = await Application.find({
+        post: post._id,
+      });
+      allApplications.push({ postId: post._id, applications: applications });
     }
+    res.send(allApplications);
+  } catch (err) {
+    res.status(500).send(err);
+  }
 });
 router.post("/", async (req, res) => {
-    const { name, telephoneNumber, supplyItems, postId } = req.body;
-    try {
-        const application = await Application.create({
-            name,
-            telephoneNumber,
-            supplyItems,
-            post: postId,
-        });
+  const { name, telephoneNumber, supplyItems, postId } = req.body;
+  try {
+    const application = await Application.create({
+      name,
+      telephoneNumber,
+      supplyItems,
+      post: postId,
+    });
 
-        res.status(201).send(application);
-    } catch (error) {
-        console.log(error.message);
-        res.status(500).send();
-    }
+    res.status(201).send(application);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send();
+  }
 });
 
 module.exports = router;
