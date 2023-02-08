@@ -91,13 +91,13 @@ router.put("/:id", auth, async (req, res) => {
 			supplyItems: supplyItems,
 		};
 		const option = { new: true };
-		const curPost = await Post.findById(postId);
-
+		
 		const updatedPost = await Post.findByIdAndUpdate(
 			postId,
 			update,
 			option
 		);
+
 		if (!updatedPost) return res.status(404).send();
 		res.status(200).send(updatedPost);
 	} catch (error) {

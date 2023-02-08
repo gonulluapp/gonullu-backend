@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
-const supplyItemSchema = require("./common_schemas/supplyItemSchema");
+const {applySupplyItemSchema} = require("./common_schemas/supplyItemSchema");
+
 const applicationSchema = new mongoose.Schema({
 	name: String,
 	telephoneNumber: String,
-	supplyItems: { type: [supplyItemSchema], required: true },
+	supplyItems: { type: [applySupplyItemSchema], required: true },
 	post: { type: mongoose.Schema.Types.ObjectId, ref: "Post" },
 });
 

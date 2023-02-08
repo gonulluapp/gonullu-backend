@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
-const supplyItemSchema = require("./common_schemas/supplyItemSchema");
+const {postSupplyItemSchema} = require("./common_schemas/supplyItemSchema");
 
 const postSchema = new mongoose.Schema({
     title: { type: String, required: true },
@@ -10,7 +10,7 @@ const postSchema = new mongoose.Schema({
     city: { type: String, required: true },
     town: { type: String, required: true },
     address: { type: String, required: true },
-    supplyItems: { type: [supplyItemSchema], required: true },
+    supplyItems: { type: [postSupplyItemSchema], required: true },
     telephoneNumber: { type: String },
     email: { type: String },
     whatsappLink: { type: String },
