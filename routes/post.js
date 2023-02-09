@@ -54,7 +54,7 @@ router.get("/", async (req, res) => {
 		if (city) where.city = city;
 		if (town) where.town = town;
 		if (supplyItemTypes) where["supplyItems.type"] = supplyItemTypes;
-		console.log(where);
+		// console.log(where);
 
 		const availablePosts = await Post.find(where);
 		//		const paginatedPosts = await Post.paginate(where, options);
