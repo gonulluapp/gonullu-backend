@@ -13,7 +13,10 @@ router.get("/", auth, async (req, res) => {
 			})
 		).map((post) => post._id);
 
-		const allApplications = await Application.find({ post: posts }).sort({
+		const allApplications = await Application.find({
+			post: posts,
+			isDeleted: false,
+		}).sort({
 			createdAt: 1,
 		});
 
@@ -31,6 +34,7 @@ router.get("/", auth, async (req, res) => {
 		res.status(500).send(err);
 	}
 });
+
 router.post("/", async (req, res) => {
 	const { name, telephoneNumber, supplyItems, postId } = req.body;
 	try {
@@ -42,6 +46,26 @@ router.post("/", async (req, res) => {
 		});
 
 		res.status(201).send(application);
+	} catch (error) {
+		console.log(error.message);
+		res.status(500).send();
+	}
+});
+
+router.delete("/:id", auth, async (req, res) => {
+	const { id } = req.params;
+	try {
+		const application = await Application.findByIdAndUpdate(
+			id,
+			{
+				isDeleted: true,
+				post: null,
+			},
+			{ new: true }
+		);
+		if (!application) return res.status(404).send();
+
+		res.status(200).send(application);
 	} catch (error) {
 		console.log(error.message);
 		res.status(500).send();

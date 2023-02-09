@@ -7,23 +7,23 @@ const mongoose = require("mongoose");
 */
 
 const schemaObject = {
-    type: {
-        type: String,
-        enum: ["ERZAK", "INSAN_GUCU", "KIYAFET", "TEMIZLIK_MALZEMESI"],
-        required: true,
-    },
-    name: { type: String },
-    amountNeeded: { type: Number, required: true },
+	type: {
+		type: String,
+		enum: ["ERZAK", "INSAN_GUCU", "KIYAFET", "TEMIZLIK_MALZEMESI"],
+		required: true,
+	},
+	name: { type: String },
+	amountNeeded: { type: Number },
 };
 
 const postSupplyItemSchema = new mongoose.Schema({
-    ...schemaObject,
-    urgency: {
-        type: Number,
-        required: true,
-    },
+	...schemaObject,
+	urgency: {
+		type: Number,
+		required: true,
+	},
 });
 
 const applySupplyItemSchema = new mongoose.Schema(schemaObject);
 
-module.exports = {applySupplyItemSchema, postSupplyItemSchema};
+module.exports = { applySupplyItemSchema, postSupplyItemSchema };

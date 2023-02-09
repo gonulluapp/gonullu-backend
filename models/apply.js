@@ -7,6 +7,7 @@ const applicationSchema = new mongoose.Schema({
 	supplyItems: { type: [applySupplyItemSchema], required: true },
 	post: { type: mongoose.Schema.Types.ObjectId, ref: "Post" },
 	createdAt: { type: Date, default: Date.now },
+	isDeleted: { type: Boolean, default: false },
 });
 
 const Application = mongoose.model("Application", applicationSchema);
