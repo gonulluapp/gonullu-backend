@@ -58,7 +58,7 @@ router.get("/", async (req, res) => {
 			where["supplyItems.type"] = supplyItemTypes;
 		//	console.log(where);
 
-		const availablePosts = await Post.find(where).sort({ date: -1 });
+		const availablePosts = await Post.find(where).sort({ date: -1 }).populate("user", '-password');
 		//		const paginatedPosts = await Post.paginate(where, options);
 
 		res.status(200).send(availablePosts);
