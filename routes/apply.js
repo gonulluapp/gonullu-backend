@@ -4,31 +4,38 @@ const router = express.Router();
 const auth = require("../middlewares/auth");
 const Application = require("../models/apply");
 
-router.get("/", auth, async (req, res) => {
+router.get("/:postId", auth, async (req, res) => {
+	const postId = req.params.postId;
+
 	try {
-		const posts = (
-			await Post.find({
-				user: req.user._id,
-				isDeleted: false,
-			})
-		).map((post) => post._id);
+		// const posts = (
+		// 	await Post.find({
+		// 		user: req.user._id,
+		// 		isDeleted: false,
+		// 	})
+		// ).map((post) => post._id);
+
+		const post = await Post.findById(postId, { isDeleted: false });
+
+		if (!post) return res.status(404).send();
 
 		const allApplications = await Application.find({
-			post: posts,
+			post: post,
+			// "post.isDeleted": false,
 			isDeleted: false,
 		}).sort({
 			createdAt: 1,
 		});
 
-		const applicationsByPostArray = allApplications.reduce((acc, curr) => {
-			if (acc[curr.post]) {
-				acc[curr.post].push(curr);
-			} else {
-				acc[curr.post] = [curr];
-			}
-			return acc;
-		}, {});
-		res.send(applicationsByPostArray);
+		// const applicationsByPostArray = allApplications.reduce((acc, curr) => {
+		// 	if (acc[curr.post]) {
+		// 		acc[curr.post].push(curr);
+		// 	} else {
+		// 		acc[curr.post] = [curr];
+		// 	}
+		// 	return acc;
+		// }, {});
+		res.send(allApplications);
 	} catch (err) {
 		console.log(err.message);
 		res.status(500).send(err);
