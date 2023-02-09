@@ -43,12 +43,12 @@ router.get("/", async (req, res) => {
 	const { page, limit } = req.query;
 
 	try {
-		const options = {
-			page: page || 0,
-			limit: limit || 10,
-			sort: { urgency: -1, date: -1 },
-			populate: "user",
-		};
+		// const options = {
+		// 	page: page || 0,
+		// 	limit: limit || 10,
+		// 	sort: { urgency: -1, date: -1 },
+		// 	populate: "user",
+		// };
 
 		const where = { isDeleted: false };
 		if (city) where.city = city;
@@ -56,7 +56,7 @@ router.get("/", async (req, res) => {
 		if (supplyItemTypes) where["supplyItems.type"] = supplyItemTypes;
 		// console.log(where);
 
-		const availablePosts = await Post.find(where);
+		const availablePosts = await Post.find(where).sort({ date: -1 });
 		//		const paginatedPosts = await Post.paginate(where, options);
 
 		res.status(200).send(availablePosts);
