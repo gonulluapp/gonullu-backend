@@ -54,10 +54,12 @@ router.get("/", async (req, res) => {
 		if (city) where.city = city;
 		if (town) where.town = town;
 		if (supplyItemTypes) where["supplyItems.type"] = supplyItemTypes;
+		console.log(where);
 
-		const paginatedPosts = await Post.paginate(where, options);
+		const availablePosts = await Post.find(where);
+		//		const paginatedPosts = await Post.paginate(where, options);
 
-		res.status(200).send(paginatedPosts);
+		res.status(200).send(availablePosts);
 	} catch (error) {
 		console.log(error.message);
 		res.status(500).send();
