@@ -9,7 +9,7 @@ const mongoose = require("mongoose");
 const schemaObject = {
 	type: {
 		type: String,
-		enum: ["ERZAK", "INSAN_GUCU", "KIYAFET", "TEMIZLIK_MALZEMESI"],
+		enum: ["ERZAK", "INSAN_GUCU", "KIYAFET", "TEMIZLIK_MALZEMESI", "DIGER"],
 		required: true,
 	},
 	name: { type: String },
