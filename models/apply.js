@@ -5,7 +5,7 @@ const applicationSchema = new mongoose.Schema({
 	name: String,
 	telephoneNumber: String,
 	supplyItems: { type: [applySupplyItemSchema], required: true },
-	post: { type: mongoose.Schema.Types.ObjectId, ref: "Post" },
+	post: { type: mongoose.Schema.Types.ObjectId, ref: "Post", required: true },
 	createdAt: { type: Date, default: Date.now },
 	isDeleted: { type: Boolean, default: false },
 });
