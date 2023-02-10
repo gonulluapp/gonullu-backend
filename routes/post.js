@@ -39,17 +39,16 @@ router.post("/", auth, async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-	const { city, town, supplyItemTypes, isActive } = req.query;
+	const { city, town, supplyItemTypes, isActive, page } = req.query;
 	//	console.log(req.query);
-	//	const { page, limit } = req.query;
-
+	// const { page } = req.query;
 	try {
-		// const options = {
-		// 	page: page || 0,
-		// 	limit: limit || 10,
-		// 	sort: { urgency: -1, date: -1 },
-		// 	populate: "user",
-		// };
+		const options = {
+			page: page || 1,
+			limit: 20,
+			sort: { isActive: -1, updatedAt: -1 },
+			populate: {select: '-password', path: 'user'},
+		};
 
 		const where = { isDeleted: false};   // TODO: added isActive match
 		if (city) where.city = city;
@@ -58,8 +57,8 @@ router.get("/", async (req, res) => {
 		if (supplyItemTypes && supplyItemTypes.length !== 0)
 			where["supplyItems.type"] = supplyItemTypes;
 
-		const availablePosts = await Post.find(where).sort({ isActive: -1, updatedAt: -1 }).populate("user", '-password');  //TODO: changed sorting to updatedAt
-		//		const paginatedPosts = await Post.paginate(where, options);
+		// const availablePosts = await Post.find(where).sort({ isActive: -1, updatedAt: -1 }).populate("user", '-password');  //TODO: changed sorting to updatedAt
+		const availablePosts = await Post.paginate(where, options);
 
 		res.status(200).send(availablePosts);
 	} catch (error) {
