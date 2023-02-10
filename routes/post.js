@@ -51,14 +51,14 @@ router.get("/", async (req, res) => {
 		// 	populate: "user",
 		// };
 
-		const where = { isDeleted: false };
+		const where = { isDeleted: false, isActive: true };   // TODO: added isActive match
 		if (city) where.city = city;
 		if (town) where.town = town;
 		if (supplyItemTypes && supplyItemTypes.length !== 0)
 			where["supplyItems.type"] = supplyItemTypes;
 		//	console.log(where);
 
-		const availablePosts = await Post.find(where).sort({ date: -1 }).populate("user", '-password');
+		const availablePosts = await Post.find(where).sort({ updatedAt: -1 }).populate("user", '-password');  //TODO: changed sorting to updatedAt
 		//		const paginatedPosts = await Post.paginate(where, options);
 
 		res.status(200).send(availablePosts);
@@ -96,12 +96,13 @@ router.put("/:id", auth, async (req, res) => {
 		email,
 		whatsappLink,
 		supplyItems,
+		isActive,
 	} = req.body;
 	const postId = req.params.id;
 	try {
 		const update = {
 			title,
-			description,
+			description, 
 			city,
 			town,
 			address,
@@ -109,6 +110,7 @@ router.put("/:id", auth, async (req, res) => {
 			email,
 			whatsappLink,
 			supplyItems: supplyItems,
+			isActive,
 		};
 		const option = { new: true };
 

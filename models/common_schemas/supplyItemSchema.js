@@ -9,7 +9,7 @@ const mongoose = require("mongoose");
 const schemaObject = {
 	type: {
 		type: String,
-		enum: ["ERZAK", "INSAN_GUCU", "KIYAFET", "TEMIZLIK_MALZEMESI", "DIGER"],
+		enum: ["ERZAK", "INSAN_GUCU", "KIYAFET", "TEMIZLIK_MALZEMESI", "KOLI", "DIGER"],  //TODO: added "KOLI" make the route changes
 		required: true,
 	},
 	name: { type: String },

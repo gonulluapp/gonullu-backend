@@ -15,8 +15,9 @@ const postSchema = new mongoose.Schema(
         telephoneNumber: { type: String },
         email: { type: String },
         whatsappLink: { type: String },
-        isDeleted: { type: Boolean, default: false },
-		googleMapsUrl: {type: String }
+		googleMapsUrl: {type: String },
+        isActive: { type: Boolean, default: true},   // TODO: added isActive field make the route changes
+        isDeleted: { type: Boolean, default: false }
     },
     { timestamps: { createdAt: "createdAt", updatedAt: "updatedAt" } }
 );
