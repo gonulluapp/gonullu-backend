@@ -45,6 +45,8 @@ router.get("/:postId", auth, async (req, res) => {
 router.post("/", async (req, res) => {
 	const { name, telephoneNumber, supplyItems, postId } = req.body;
 	try {
+		const post = await Post.findOne({ _id: postId, isDeleted: false , isActive: true });
+		if (!post) return res.status(404).send(); // 404: Post Not Found
 		const application = await Application.create({
 			name,
 			telephoneNumber,
