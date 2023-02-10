@@ -14,7 +14,7 @@ app.use(
 );
 
 app.get('/', (req, res) => {
-    res.send({ message: "Server is running"});
+    res.send({ message: "Server is running."});
 });
 app.use('/apply', applyRouter);
 app.use('/user', userRouter);
