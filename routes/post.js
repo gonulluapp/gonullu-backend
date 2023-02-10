@@ -39,7 +39,7 @@ router.post("/", auth, async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-	const { city, town, supplyItemTypes } = req.query;
+	const { city, town, supplyItemTypes, isActive } = req.query;
 	//	console.log(req.query);
 	//	const { page, limit } = req.query;
 
@@ -54,9 +54,9 @@ router.get("/", async (req, res) => {
 		const where = { isDeleted: false};   // TODO: added isActive match
 		if (city) where.city = city;
 		if (town) where.town = town;
+		if (isActive) where.isActive = isActive;
 		if (supplyItemTypes && supplyItemTypes.length !== 0)
 			where["supplyItems.type"] = supplyItemTypes;
-		//	console.log(where);
 
 		const availablePosts = await Post.find(where).sort({ updatedAt: -1 }).populate("user", '-password');  //TODO: changed sorting to updatedAt
 		//		const paginatedPosts = await Post.paginate(where, options);
