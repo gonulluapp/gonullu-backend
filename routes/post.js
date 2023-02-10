@@ -51,7 +51,7 @@ router.get("/", async (req, res) => {
 		// 	populate: "user",
 		// };
 
-		const where = { isDeleted: false, isActive: true };   // TODO: added isActive match
+		const where = { isDeleted: false};   // TODO: added isActive match
 		if (city) where.city = city;
 		if (town) where.town = town;
 		if (supplyItemTypes && supplyItemTypes.length !== 0)
